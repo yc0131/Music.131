@@ -69,7 +69,7 @@ function Home() {
       </section>
 
       {/* footer */}
-      <footer className="absolute bottom-0 left-0 right-0 flex items-end justify-between px-5 pb-5 font-mono-x text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+      <footer className="mt-8 flex items-end justify-between px-5 pb-5 font-mono-x text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
         <span>scroll · ↓</span>
         <span className="font-display italic text-base text-foreground">opus.<span className="blink">_</span></span>
       </footer>

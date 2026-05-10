@@ -30,12 +30,12 @@ export const QUESTIONS: Question[] = [
     ],
   },
   {
-    q: "重要考试/演出/比赛前最后一个月，你最崩溃的时刻是：",
+    q: "演出前一天，你发现曲子还有几个乐句没练完，你会？",
     options: [
-      { label: "发现自己某个技术动作练了很多年还是有问题，怀疑人生", types: ["ISTP", "ISTJ"] },
-      { label: "文化课/理论课突然拉胯，觉得练琴没意义了", types: ["ISFJ", "INFP"] },
-      { label: "看到身边音乐生朋友已经拿了好几个机会，而你还在为一个音色抓狂", types: ["ENFJ", "INTJ"] },
-      { label: "半夜灵感爆棚把曲子改编了，结果第二天被老师骂'不要乱来'", types: ["ENTP", "ISFP"] },
+      { label: "熬夜练完，保证每个乐句完美", types: ["ISTJ", "ISFJ"] },
+      { label: "偷偷跳过，想着明天再补", types: ["ISFP", "ENTP"] },
+      { label: "焦虑到失眠，反复复盘错误", types: ["INFJ", "INTJ"] },
+      { label: "直接崩溃，刷手机缓解压力", types: ["ENFP", "INTP"] },
     ],
   },
   {
@@ -75,12 +75,12 @@ export const QUESTIONS: Question[] = [
     ],
   },
   {
-    q: "写'我的音乐梦想'或自我介绍时，你会：",
+    q: "当你练了一晚上，老师却只说一句：'没感情。'你会？",
     options: [
-      { label: "写得特别文艺，引用一堆音乐家名言（自己都快信了）", types: ["INFJ", "INFP"] },
-      { label: "直接写'想睡觉'和'想吃螺蛳粉'，懒得装", types: ["INTP", "ISFP"] },
-      { label: "写自己如何被音乐治愈、如何想走音乐这条路", types: ["ENFJ", "ESFP"] },
-      { label: "写得特别真实：又爱又恨，但已经回不去了", types: ["ENFP", "INTJ"] },
+      { label: "回家继续疯狂练", types: ["ISTJ", "ISFJ"] },
+      { label: "表面冷静，回去偷偷崩溃", types: ["INFJ", "INFP"] },
+      { label: "开始怀疑自己是不是没天赋", types: ["ISFP", "INTP"] },
+      { label: "当场想退学", types: ["ENFP", "ENTP"] },
     ],
   },
   {

@@ -14,7 +14,7 @@ function ResultPage() {
   const [typeKey, setTypeKey] = useState<TypeKey | null>(null);
 
   useEffect(() => {
-    if (t && RESULTS[t]) {
+    if (t && (RESULTS as Record<string, unknown>)[t]) {
       setTypeKey(t);
       return;
     }

@@ -1,26 +1,45 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { RESULTS, type TypeKey } from "@/lib/quiz-data";
 
 export const Route = createFileRoute("/result")({
   component: ResultPage,
+  validateSearch: (search: Record<string, unknown>) => ({
+    t: (search.t as TypeKey | undefined) ?? undefined,
+  }),
 });
 
-// Placeholder result — user will replace later
-const RESULT = {
-  code: "INFP-pp",
-  name: "深夜哭谱型",
-  subtitle: "The Midnight Score-Crier",
-  madness: 87,
-  description:
-    "你是那种把谱子翻到最后一页，会突然鼻酸的人。别人练琴是任务，你练琴是渡劫。每一次pp都是叹气，每一次ff都是反抗。",
-  punchlines: [
-    "你不是在练琴，你是在和自己谈判。",
-    "老师说'再来一遍'，你听成了'你不配'。",
-    "凌晨三点的琴房，是你唯一的朋友。",
-  ],
-  traits: ["敏感系", "完美主义", "EMO高发", "独处充电"],
-};
-
 function ResultPage() {
+  const { t } = Route.useSearch();
+  const [typeKey, setTypeKey] = useState<TypeKey | null>(null);
+
+  useEffect(() => {
+    if (t && (RESULTS as Record<string, unknown>)[t]) {
+      setTypeKey(t);
+      return;
+    }
+    try {
+      const saved = sessionStorage.getItem("mbti-result") as TypeKey | null;
+      if (saved && (RESULTS as Record<string, unknown>)[saved]) {
+        setTypeKey(saved);
+        return;
+      }
+    } catch {}
+    setTypeKey("INFP");
+  }, [t]);
+
+  if (!typeKey) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-background">
+        <p className="font-mono-x text-xs uppercase tracking-[0.3em] text-muted-foreground flicker">
+          loading result…
+        </p>
+      </main>
+    );
+  }
+
+  const r = RESULTS[typeKey];
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <header className="flex items-center justify-between px-5 pt-5 text-[10px] uppercase tracking-[0.25em] font-mono-x">
@@ -28,25 +47,21 @@ function ResultPage() {
         <span className="flicker">result · 24:00</span>
       </header>
 
-      {/* SHARE CARD — designed to be screenshotted */}
       <section className="px-5 pt-8">
-        <div
-          id="share-card"
-          className="relative border border-foreground bg-background p-6"
-        >
+        <div id="share-card" className="relative border border-foreground bg-background p-6">
           <div className="grain absolute inset-0" />
 
-          {/* card header */}
+          {/* header */}
           <div className="relative flex items-start justify-between border-b border-foreground pb-4">
             <div>
               <p className="font-mono-x text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                 music student · midnight mbti
               </p>
-              <p className="mt-1 font-mono-x text-xs">NO. 001</p>
+              <p className="mt-1 font-mono-x text-xs">NO. {String(r.index).padStart(3, "0")} / 012</p>
             </div>
             <div className="text-right">
               <p className="font-mono-x text-[10px] uppercase tracking-[0.3em]">type</p>
-              <p className="mt-1 font-mono-x text-base font-bold">{RESULT.code}</p>
+              <p className="mt-1 font-mono-x text-base font-bold">{r.type}</p>
             </div>
           </div>
 
@@ -55,11 +70,14 @@ function ResultPage() {
             <p className="font-mono-x text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
               你是 / you are
             </p>
-            <h1 className="mt-3 font-display text-[42px] leading-[1.05] tracking-tight">
-              {RESULT.name}
+            <p className="mt-3 font-display italic text-base text-muted-foreground">
+              {r.emoji}
+            </p>
+            <h1 className="mt-1 font-display text-[40px] leading-[1.05] tracking-tight">
+              「{r.name}」
             </h1>
-            <p className="mt-2 font-display italic text-base text-muted-foreground">
-              {RESULT.subtitle}
+            <p className="mt-2 font-display italic text-sm text-muted-foreground">
+              {r.subtitle}
             </p>
           </div>
 
@@ -70,56 +88,31 @@ function ResultPage() {
                 发疯指数 / madness
               </p>
               <p className="font-display text-3xl">
-                {RESULT.madness}<span className="font-mono-x text-sm text-muted-foreground"> / 100</span>
+                {r.madness}
+                <span className="font-mono-x text-sm text-muted-foreground"> / 100</span>
               </p>
             </div>
             <div className="mt-3 h-2 w-full border border-foreground">
-              <div
-                className="h-full bg-foreground"
-                style={{ width: `${RESULT.madness}%` }}
-              />
+              <div className="h-full bg-foreground" style={{ width: `${r.madness}%` }} />
             </div>
             <div className="mt-1 flex justify-between font-mono-x text-[9px] uppercase tracking-[0.25em] text-muted-foreground">
-              <span>pp</span>
-              <span>mp</span>
-              <span>mf</span>
-              <span>ff</span>
-              <span>fff</span>
+              <span>pp</span><span>mp</span><span>mf</span><span>ff</span><span>fff</span>
             </div>
           </div>
 
           {/* description */}
           <p className="relative mt-8 font-display text-[17px] leading-relaxed slide-up-in" style={{ animationDelay: "0.2s" }}>
-            {RESULT.description}
+            {r.description}
           </p>
 
-          {/* punchlines — 扎心文案 */}
+          {/* hurt line */}
           <div className="relative mt-8 border-t border-foreground pt-6 slide-up-in" style={{ animationDelay: "0.3s" }}>
             <p className="font-mono-x text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-              扎心三连 / it hurts
+              扎心一句 / it hurts
             </p>
-            <ol className="mt-4 space-y-4">
-              {RESULT.punchlines.map((line, i) => (
-                <li key={i} className="flex gap-3">
-                  <span className="font-mono-x text-[10px] uppercase tracking-[0.25em] text-muted-foreground pt-1">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="font-display italic text-[17px] leading-snug">"{line}"</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          {/* traits */}
-          <div className="relative mt-8 flex flex-wrap gap-2">
-            {RESULT.traits.map((t) => (
-              <span
-                key={t}
-                className="border border-foreground px-3 py-1 font-mono-x text-[10px] uppercase tracking-[0.25em]"
-              >
-                # {t}
-              </span>
-            ))}
+            <p className="mt-4 font-display italic text-[18px] leading-snug">
+              "{r.hurt}"
+            </p>
           </div>
 
           {/* footer */}
@@ -131,17 +124,15 @@ function ResultPage() {
               </p>
             </div>
             <p className="font-mono-x text-[9px] uppercase tracking-[0.3em] text-right text-muted-foreground">
-              扫码测你的<br />发疯人格
+              你也来测<br />哪种发疯人格
             </p>
           </div>
         </div>
 
-        {/* share hint */}
         <p className="mt-6 text-center font-display italic text-sm text-muted-foreground">
           长按截图 · 发到小红书
         </p>
 
-        {/* actions */}
         <div className="mt-6 grid grid-cols-2 gap-3 pb-10">
           <Link
             to="/test"

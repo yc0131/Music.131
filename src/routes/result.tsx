@@ -44,74 +44,117 @@ function ResultPage() {
     <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <header className="flex items-center justify-between px-5 pt-5 text-[10px] uppercase tracking-[0.25em] font-mono-x">
         <Link to="/" className="hover:opacity-60">← home</Link>
-        <span className="flicker">result · 24:00</span>
+        <span className="flicker">annual report · 24:00</span>
       </header>
 
-      <section className="px-5 pt-8">
-        <div id="share-card" className="relative border border-foreground bg-background p-6">
-          <div className="grain absolute inset-0" />
+      <section className="px-4 pt-6">
+        <div id="share-card" className="relative border border-foreground bg-background p-5">
+          <div className="grain absolute inset-0 pointer-events-none" />
 
-          {/* header */}
-          <div className="relative flex items-start justify-between border-b border-foreground pb-4">
+          {/* report header */}
+          <div className="relative flex items-start justify-between border-b border-foreground pb-3">
             <div>
               <p className="font-mono-x text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                music student · midnight mbti
+                midnight mbti · 2026
               </p>
-              <p className="mt-1 font-mono-x text-xs">NO. {String(r.index).padStart(3, "0")} / 012</p>
+              <p className="mt-1 font-display italic text-[13px]">音乐生·年度人格报告</p>
             </div>
             <div className="text-right">
-              <p className="font-mono-x text-[10px] uppercase tracking-[0.3em]">type</p>
-              <p className="mt-1 font-mono-x text-base font-bold">{r.type}</p>
+              <p className="font-mono-x text-[9px] uppercase tracking-[0.3em] text-muted-foreground">type</p>
+              <p className="mt-0.5 font-mono-x text-sm font-bold">{r.type}</p>
+              <p className="font-mono-x text-[9px] text-muted-foreground">
+                NO.{String(r.index).padStart(2, "0")}/12
+              </p>
             </div>
           </div>
 
-          {/* name */}
-          <div className="relative mt-6 slide-up-in">
-            <p className="font-mono-x text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+          {/* hero name */}
+          <div className="relative mt-7 slide-up-in">
+            <p className="font-mono-x text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
               你是 / you are
             </p>
-            <p className="mt-3 font-display italic text-base text-muted-foreground">
-              {r.emoji}
+            <p className="mt-3 font-display italic text-[13px] text-muted-foreground">
+              · {r.emoji} ·
             </p>
-            <h1 className="mt-1 font-display text-[40px] leading-[1.05] tracking-tight">
+            <h1 className="mt-2 font-display text-[44px] leading-[1.02] tracking-tight">
               「{r.name}」
             </h1>
-            <p className="mt-2 font-display italic text-sm text-muted-foreground">
+            <p className="mt-2 font-display italic text-[13px] text-muted-foreground">
               {r.subtitle}
             </p>
           </div>
 
-          {/* madness meter */}
-          <div className="relative mt-8 slide-up-in" style={{ animationDelay: "0.1s" }}>
-            <div className="flex items-end justify-between">
-              <p className="font-mono-x text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
-                发疯指数 / madness
+          {/* stats grid */}
+          <div
+            className="relative mt-7 grid grid-cols-2 border border-foreground slide-up-in"
+            style={{ animationDelay: "0.1s" }}
+          >
+            <div className="border-r border-foreground p-4">
+              <p className="font-mono-x text-[9px] uppercase tracking-[0.25em] text-muted-foreground">
+                发疯指数
               </p>
-              <p className="font-display text-3xl">
-                {r.madness}
-                <span className="font-mono-x text-sm text-muted-foreground"> / 100</span>
+              <p className="mt-2 font-display text-[34px] leading-none">
+                {r.madness}<span className="text-base text-muted-foreground">%</span>
+              </p>
+              <div className="mt-3 h-[3px] w-full bg-muted-foreground/30">
+                <div className="h-full bg-foreground" style={{ width: `${r.madness}%` }} />
+              </div>
+              <p className="mt-1 font-mono-x text-[8px] uppercase tracking-[0.25em] text-muted-foreground">
+                madness
               </p>
             </div>
-            <div className="mt-3 h-2 w-full border border-foreground">
-              <div className="h-full bg-foreground" style={{ width: `${r.madness}%` }} />
-            </div>
-            <div className="mt-1 flex justify-between font-mono-x text-[9px] uppercase tracking-[0.25em] text-muted-foreground">
-              <span>pp</span><span>mp</span><span>mf</span><span>ff</span><span>fff</span>
+            <div className="p-4">
+              <p className="font-mono-x text-[9px] uppercase tracking-[0.25em] text-muted-foreground">
+                深夜崩溃概率
+              </p>
+              <p className="mt-2 font-display text-[34px] leading-none">
+                {r.crash}<span className="text-base text-muted-foreground">%</span>
+              </p>
+              <div className="mt-3 h-[3px] w-full bg-muted-foreground/30">
+                <div className="h-full bg-foreground" style={{ width: `${r.crash}%` }} />
+              </div>
+              <p className="mt-1 font-mono-x text-[8px] uppercase tracking-[0.25em] text-muted-foreground">
+                midnight crash
+              </p>
             </div>
           </div>
 
-          {/* description */}
-          <p className="relative mt-8 font-display text-[17px] leading-relaxed slide-up-in" style={{ animationDelay: "0.2s" }}>
-            {r.description}
-          </p>
-
-          {/* hurt line */}
-          <div className="relative mt-8 border-t border-foreground pt-6 slide-up-in" style={{ animationDelay: "0.3s" }}>
-            <p className="font-mono-x text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+          {/* punch line — hero quote */}
+          <div
+            className="relative mt-7 border border-foreground bg-foreground px-5 py-6 text-background slide-up-in"
+            style={{ animationDelay: "0.18s" }}
+          >
+            <p className="font-mono-x text-[9px] uppercase tracking-[0.3em] opacity-70">
               扎心一句 / it hurts
             </p>
-            <p className="mt-4 font-display italic text-[18px] leading-snug">
-              "{r.hurt}"
+            <p className="mt-3 font-display text-[19px] leading-snug">
+              "{r.punch}"
+            </p>
+          </div>
+
+          {/* description */}
+          <div
+            className="relative mt-7 slide-up-in"
+            style={{ animationDelay: "0.26s" }}
+          >
+            <p className="font-mono-x text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+              人格速写 / sketch
+            </p>
+            <p className="mt-3 font-display text-[15px] leading-relaxed">
+              {r.description}
+            </p>
+          </div>
+
+          {/* second hurt line */}
+          <div
+            className="relative mt-6 border-t border-foreground pt-5 slide-up-in"
+            style={{ animationDelay: "0.32s" }}
+          >
+            <p className="font-mono-x text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+              另一个真相 / b-side
+            </p>
+            <p className="mt-3 font-display italic text-[15px] leading-snug">
+              {r.hurt}
             </p>
           </div>
 

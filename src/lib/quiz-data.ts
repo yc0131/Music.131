@@ -121,6 +121,8 @@ export interface Result {
   description: string;
   hurt: string;
   madness: number;
+  crash: number;
+  punch: string;
 }
 
 export const RESULTS: Record<TypeKey, Result> = {

@@ -20,7 +20,7 @@ function ResultPage() {
     }
     try {
       const saved = sessionStorage.getItem("mbti-result") as TypeKey | null;
-      if (saved && RESULTS[saved]) {
+      if (saved && (RESULTS as Record<string, unknown>)[saved]) {
         setTypeKey(saved);
         return;
       }
